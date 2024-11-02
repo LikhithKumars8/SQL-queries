@@ -1,0 +1,58 @@
+CREATE TABLE characters (
+    name VARCHAR(100),
+    guild VARCHAR(100),
+    class VARCHAR(100),
+    level INT,
+    experience INT,
+    health DECIMAL(3, 2),  -- Adjusted precision for health
+    is_alive BOOLEAN,
+    last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Updated to use CURRENT_TIMESTAMP
+    mentor_id INT
+);
+
+CREATE TABLE inventory(
+	character_id INT,
+	item_id	INT,
+	quantity INT,
+	is_equipped	BOOLEAN,
+	purchase_date TIMESTAMP,
+	expiry_date	TIMESTAMP,
+	value INT
+)
+
+CREATE TABLE item(
+	name VARCHAR(100),
+	item_type VARCHAR(20),
+	power INT,
+	weight DECIMAL(3, 2),
+	rarity VARCHAR(20),
+	date_added TIMESTAMP
+)
+-- for existing tables---
+-- Step 1: Add the column without the primary key
+ALTER TABLE characters
+ADD COLUMN id SERIAL;
+
+-- Step 2: Set the column as the primary key
+ALTER TABLE characters
+ADD CONSTRAINT characters_pkey PRIMARY KEY (id);
+
+--not for exisitng table--
+ALTER TABLE item
+ADD COLUMN id SERIAL PRIMARY KEY;
+
+SELECT * FROM characters
+
+--Add data to the tables
+copy characters (name, guild, class, level, experience, health, is_alive, last_active, mentor_id)
+FROM 'C:/Users/appin/Downloads/fantasy_tables/characters.csv'
+WITH (FORMAT csv, HEADER);
+
+ALTER TABLE item
+ALTER COLUMN weight TYPE NUMERIC(5, 2);
+
+---using psql tool
+-- .\copy characters (name, guild, class, level, experience, health, is_alive, last_active, mentor_id) FROM 'C:/Users/appin/Downloads/f
+-- antasy_tables/characters.csv' WITH (FORMAT csv, HEADER);
+
+\d table_name to see the table structure
