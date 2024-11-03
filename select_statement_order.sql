@@ -18,4 +18,7 @@ SELECT name, level, level/10 AS level_scaled FROM characters WHERE level/10 > 3
 -- FIRST solve the brackets
 
 SELECT NOT (true and NOT false or false AND (true or true) AND true) 
-
+--example
+SELECT name, level, is_alive, mentor_id, class 
+FROM characters 
+WHERE (level > 20 AND is_alive = true OR mentor_id is NOT NULL) AND NOT(class IN('Mage', 'Archer'))
