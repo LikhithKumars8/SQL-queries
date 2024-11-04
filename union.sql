@@ -33,3 +33,10 @@ SELECT * FROM characters_dead;
 SELECT col1, col2 FROM table1
 UNION DISTINCT
 SELECT col1, col2 FROM table2
+
+-- Example
+SELECT id, name, item_type, power, date_added, rarity
+FROM item
+UNION DISTINCT
+SELECT id, name, 'character' AS item_type, level AS power, last_active AS date_added, CAST(experience AS TEXT) AS rarity
+FROM characters;
